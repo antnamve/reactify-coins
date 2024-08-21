@@ -1,0 +1,102 @@
+.trading-bar {
+	display: flex;
+	position: relative;
+	row-gap: 20px;
+	flex-direction: column;
+	align-items: center;
+}
+
+.sidebar-main-title {
+	color: #352e5b;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.pfp {
+	border: solid 2px #9381ff;
+	border-radius: 50%;
+	width: 72px;
+	height: 72px;
+}
+
+.edit-profile-button {
+	color: #7d67ff;
+	font-weight: 500;
+	font-size: 14px;
+}
+
+.sidebar-details {
+	padding-inline: 1px;
+}
+
+.sidebar-info-section {
+	display: flex;
+	row-gap: 12px;
+	flex-direction: column;
+}
+
+.sidebar-title {
+	color: #352e5b;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.sidebar-section-item {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 12px;
+	width: 100%;
+	font-size: 14px;
+}
+
+.sidebar-assets-id {
+	color: #a69ed6;
+}
+
+.sidebar-assets-value {
+	margin-right: 4px;
+	color: #352e5b;
+}
+
+.sidebar-assets-currency {
+	color: #a69ed6;
+}
+
+.more-assets-button {
+	color: #7d67ff;
+}
+
+.joined {
+	color: #c0bbe0;
+	font-size: 14px;
+}
+
+.date {
+	color: #352e5b;
+	font-size: 14px;
+}
+
+.trade-now {
+	display: inline-flex;
+	position: absolute;
+	bottom: 12px;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	cursor: pointer;
+	border: none;
+	border-radius: 10px;
+	border-radius: 5px;
+	background-color: #7d67ff;
+	padding: 10px 20px;
+	width: 221px;
+	height: 56px;
+	color: white;
+	color: white;
+}
+
+.trade-now svg {
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 4px;
+}

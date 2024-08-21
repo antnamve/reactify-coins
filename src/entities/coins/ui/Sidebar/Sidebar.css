@@ -1,0 +1,9 @@
+.sidebar {
+	display: flex;
+	row-gap: 10px;
+	flex-direction: column;
+	border-left: 1.5px #c1bdd4 solid;
+	padding-top: 8px;
+	padding-inline: 8px;
+	height: 100%;
+}

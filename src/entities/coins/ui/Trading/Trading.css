@@ -1,0 +1,107 @@
+/* Trading.css */
+
+.trading-container {
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 20px;
+	background-color: #f4f4f9;
+	border-radius: 10px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	font-family: Arial, sans-serif;
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 20px;
+	color: #333;
+}
+
+.trading-form {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	margin-bottom: 30px;
+}
+
+select,
+input {
+	padding: 10px;
+	font-size: 16px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.trading-buttons {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.trading-buttons button {
+	flex: 1;
+	padding: 10px;
+	font-size: 16px;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.trading-buttons button:hover {
+	opacity: 0.9;
+}
+
+.trading-buttons button:nth-child(1) {
+	background-color: #4caf50; /* Green for Buy */
+}
+
+.trading-buttons button:nth-child(2) {
+	background-color: #f44336; /* Red for Sell */
+}
+
+.trading-buttons button:nth-child(3) {
+	background-color: #ff9800; /* Orange for Short Sell */
+}
+
+.trading-buttons button:nth-child(4) {
+	background-color: #2196f3; /* Blue for Short Buy */
+}
+
+.portfolio,
+.short-positions {
+	margin-top: 20px;
+}
+
+.portfolio h2,
+.short-positions h2 {
+	margin-bottom: 10px;
+	font-size: 18px;
+	color: #555;
+	border-bottom: 2px solid #ddd;
+	padding-bottom: 5px;
+}
+
+.portfolio div,
+.short-positions div {
+	background-color: #fff;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	margin-bottom: 5px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.portfolio div:last-child,
+.short-positions div:last-child {
+	margin-bottom: 0;
+}
+
+.portfolio div span,
+.short-positions div span {
+	font-size: 16px;
+	color: #333;
+}

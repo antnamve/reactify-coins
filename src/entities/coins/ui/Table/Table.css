@@ -1,0 +1,76 @@
+.transaction-table-container {
+	margin-top: 20px;
+	width: 100%;
+	overflow-x: auto;
+}
+
+.transaction-table {
+	border: coll;
+	border-radius: 10px;
+	border-spacing: 0;
+	background-color: #7d67ff;
+	padding-top: 20px;
+	padding-inline: 30px;
+	width: 100%;
+	color: white;
+}
+
+.transaction-table th,
+.transaction-table td {
+	padding: 15px;
+	font-weight: 500;
+	text-align: left;
+}
+
+.transaction-table th {
+	color: #c8c2e8;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.transaction-table thead {
+	border-bottom: 5px solid green;
+}
+
+.transactions-table-header {
+	border-bottom: #2ecc71 2px solid;
+}
+
+.transaction-table tbody tr {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.transaction-table tbody tr:last-child {
+	border-bottom: none;
+}
+
+.transaction-item {
+	display: flex;
+	align-items: center;
+}
+
+.transaction-icon {
+	margin-right: 10px;
+	border-radius: 50%;
+	background-color: white; /* White background for icons */
+	padding: 3px;
+	width: 25px;
+	height: 25px;
+}
+
+.transaction-table td {
+	color: #f5f6fa; /* Lighter color for table content */
+	font-size: 14px;
+}
+
+.transaction-table tbody tr td:last-child {
+	color: rgba(255, 255, 255, 0.7); /* Slightly muted color for the date */
+}
+
+.transaction-table tbody tr td:nth-child(4) {
+	color: #2ecc71; /* Green color for status, adjust for different statuses */
+}
+
+.transaction-table tbody tr td:nth-child(4):contains('Pending') {
+	color: #f39c12; /* Orange color for pending status */
+}
