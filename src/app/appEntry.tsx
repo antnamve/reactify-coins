@@ -1,4 +1,4 @@
-import { MainPage } from '@/pages/main'
+import MainPage from '@/pages/main/ui/Page'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'

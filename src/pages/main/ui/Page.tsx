@@ -1,6 +1,6 @@
-import Activity from '@/entities/coins/ui/Activity/Activity'
-import Assets from '@/entities/coins/ui/Assets/Assets'
-import Sidebar from '@/entities/coins/ui/Sidebar/Sidebar'
+import Sidebar from '@/widgets/Sidebar/Sidebar'
+import Activity from './Activity/Activity'
+import Assets from './Assets/ui/Assets'
 import './Page.css'
 
 const MainPage = () => {

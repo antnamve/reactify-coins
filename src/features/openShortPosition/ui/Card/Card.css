@@ -1,0 +1,87 @@
+.card-new {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 40px;
+	border: solid 2px #9381ff;
+	border-radius: 10px;
+	padding-top: 8px;
+	min-width: 269px;
+	height: 158px;
+	color: #9381ff;
+}
+
+.card-new-center {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.card-new-square {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 14px;
+	border: solid 2px #9381ff;
+	border-radius: 10px;
+	width: 30px;
+	height: 30px;
+}
+
+.card-new-button {
+	border: none;
+	background-color: transparent;
+	color: inherit;
+	font: inherit;
+	font-weight: bold;
+}
+
+.card-new-description {
+	font-weight: bold;
+}
+
+.card-top-data {
+	display: flex;
+	flex-direction: column;
+}
+
+.card-top-currency {
+	font-size: 20px;
+}
+
+.card-top-value {
+	font-size: 40px;
+}
+
+.card-bottom {
+	display: flex;
+	justify-content: space-between;
+}
+
+.card-bottom-item {
+	display: flex;
+	flex-direction: column;
+}
+
+.card-profit {
+	color: #3edd87;
+}
+
+.card-loss {
+	color: #f46565;
+}
+
+.card-neutral {
+	color: #cabbb2;
+}
+
+.card-header {
+	min-height: 39px;
+}
+
+.assets {
+	display: flex;
+	flex-direction: column;
+	max-height: 323px;
+}

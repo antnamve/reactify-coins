@@ -1,34 +1,25 @@
-import { Coin, Data } from '@/shared/interfaces'
+import { Activity } from '@/entities/activities/model/types'
+import { ShortPosition } from '@/entities/shortPositions/model/types'
+import { loadInitialState } from '@/shared/helpers/loadInitialState'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
-import { ShortPosition } from './../../../shared/interfaces/index'
+import { Coin, GetCoinsData } from './types'
 
-const loadInitialState = () => {
-	const storedCoins = localStorage.getItem('assets')
-	return storedCoins ? JSON.parse(storedCoins) : []
+interface CoinsState {
+	shortPositions: ShortPosition[]
+	activities: Activity[]
 }
 
-const loadInitialShorts = (): ShortPosition[] => {
-	const storedCoins = localStorage.getItem('shortPositions')
-	return storedCoins ? JSON.parse(storedCoins) : []
-}
-
-const loadInitialActivities = () => {
-	const storedCoins = localStorage.getItem('activity')
-	return storedCoins ? JSON.parse(storedCoins) : []
-}
-
-const initialState = {
-	coins: loadInitialState(),
-	shortPositions: loadInitialShorts(),
-	activities: loadInitialActivities(),
+const initialState: CoinsState = {
+	shortPositions: loadInitialState('shortPositions'),
+	activities: loadInitialState('activities'),
 }
 
 export const coinsSlice = createSlice({
 	name: 'coins',
 	initialState,
 	reducers: {
-		shortSellCoin: (
+		openShortTrade: (
 			state,
 			action: PayloadAction<{
 				amount: number
@@ -37,27 +28,22 @@ export const coinsSlice = createSlice({
 			}>
 		) => {
 			const { amount, data } = action.payload
-
-			state.shortPositions.push(action.payload)
-
 			const activityEntry = {
 				coin: data,
 				amount,
 				status: 'Opened',
 				timestamp: new Date().toLocaleString(),
 				gain: null,
-			}
+			} as const
 
-			const activity = JSON.parse(localStorage.getItem('activity') || '[]')
-			activity.push(activityEntry)
-
+			state.shortPositions.push(action.payload)
 			state.activities.push(activityEntry)
 
-			localStorage.setItem('activity', JSON.stringify(activity))
 			localStorage.setItem(
 				'shortPositions',
 				JSON.stringify(state.shortPositions)
 			)
+			localStorage.setItem('activity', JSON.stringify(state.activities))
 		},
 
 		closeShortTrade: (
@@ -65,56 +51,40 @@ export const coinsSlice = createSlice({
 			action: PayloadAction<{
 				timestamp: string
 				coin: ShortPosition
-				oldData: ShortPosition[]
-				newData: Data | undefined
+				oldCoins: ShortPosition[]
+				newCoins: GetCoinsData | undefined
 				currency: string
 			}>
 		) => {
-			const { timestamp, coin, oldData, newData, currency } = action.payload
+			const { timestamp, coin, oldCoins, newCoins, currency } = action.payload
+			const oldCoin = oldCoins.find(item => item.data.name === currency)
+			const newCoin = newCoins?.coins.find(item => item.name === currency)
 
-			const oldCoin = oldData.find(item => item.data.name === currency)
+			if (!oldCoin || !newCoin) return
 
-			const newCoin = newData?.coins.find(item => item.name === currency)
+			const gain = Number(oldCoin.data.price) - Number(newCoin.price)
 
-			if (oldCoin?.data.price === undefined || newCoin?.price === undefined) {
-				console.error(
-					`Old coin data not found or price is undefined for currency: ${currency}`
-				)
-				return
-			}
-
-			const gain = Number(oldCoin?.data.price) - Number(newCoin?.price)
-
-			const coinDataString = localStorage.getItem('shortPositions') ?? ''
-			let coinDataArray = JSON.parse(coinDataString)
-
-			coinDataArray = coinDataArray.filter(
+			const updatedCoins = oldCoins.filter(
 				(item: ShortPosition) => item.timestamp !== timestamp
 			)
 
-			localStorage.setItem('shortPositions', JSON.stringify(coinDataArray))
+			localStorage.setItem('shortPositions', JSON.stringify(updatedCoins))
 
 			const activityEntry = {
 				status: 'Closed',
 				timestamp: new Date().toLocaleString(),
 				coin: coin.data,
-				amount: oldCoin?.amount,
-				gain: gain,
-			}
+				amount: oldCoin.amount,
+				gain,
+			} as const
 
-			const activity = JSON.parse(localStorage.getItem('activity') || '[]')
-			activity.push(activityEntry)
-
-			localStorage.setItem('activity', JSON.stringify(activity))
 			state.activities.push(activityEntry)
 
-			state.shortPositions = state.shortPositions.filter(
-				activity => activity.timestamp !== timestamp
-			)
+			state.shortPositions = updatedCoins
 		},
 	},
 })
 
-export const { shortSellCoin, closeShortTrade } = coinsSlice.actions
+export const { openShortTrade, closeShortTrade } = coinsSlice.actions
 
 export default coinsSlice.reducer

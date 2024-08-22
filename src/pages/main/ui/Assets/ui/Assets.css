@@ -1,0 +1,15 @@
+.cards-row {
+	margin-bottom: 54px;
+	margin-bottom: 54px;
+	max-width: 76vw;
+	min-height: 32vh;
+	overflow: auto;
+	overflow-y: hidden;
+	scroll-behavior: smooth;
+	white-space: nowrap;
+}
+
+.cards-row {
+	display: inline-flex;
+	flex-wrap: nowrap;
+}
