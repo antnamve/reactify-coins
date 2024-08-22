@@ -5,7 +5,7 @@ import SidebarAssets from '../SidebarAssets/SidebarAssets'
 import './Sidebar.css'
 
 function Sidebar() {
-	const { data, isLoading } = useGetCoinsQuery()
+	const { data } = useGetCoinsQuery()
 
 	return (
 		<div className='sidebar'>

@@ -1,4 +1,4 @@
-export function formatNumber(num) {
+export function formatNumber(num: number | null) {
 	if (num === null) {
 		return '-'
 	}

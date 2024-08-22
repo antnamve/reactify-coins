@@ -17,14 +17,14 @@ interface Stats {
 	total24hVolume: string
 }
 
-interface Coin {
+export interface Coin {
 	uuid: string
 	symbol: string
 	name: string
 	color: string
 	iconUrl: string
 	marketCap: string
-	price: number
+	price: string
 	listedAt: number
 	tier: number
 	change: string
@@ -87,7 +87,7 @@ export interface Special {
 export interface ShortPosition {
 	amount: number
 	timestamp?: string
-	data: CoinData
+	data: Coin
 }
 
 export interface Activities {

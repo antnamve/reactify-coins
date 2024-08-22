@@ -1,4 +1,4 @@
-import { CoinData, Data } from '@/shared/interfaces'
+import { Coin, Data } from '@/shared/interfaces'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 import { ShortPosition } from './../../../shared/interfaces/index'
@@ -32,7 +32,8 @@ export const coinsSlice = createSlice({
 			state,
 			action: PayloadAction<{
 				amount: number
-				data: CoinData
+				data: Coin
+				timestamp: string
 			}>
 		) => {
 			const { amount, data } = action.payload
@@ -82,7 +83,7 @@ export const coinsSlice = createSlice({
 				return
 			}
 
-			const gain = oldCoin?.data.price - newCoin?.price
+			const gain = Number(oldCoin?.data.price) - Number(newCoin?.price)
 
 			const coinDataString = localStorage.getItem('shortPositions') ?? ''
 			let coinDataArray = JSON.parse(coinDataString)

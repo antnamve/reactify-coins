@@ -38,7 +38,7 @@ function Table({ entriesCount, activities }: TableProps) {
 								{entry.coin?.name}
 							</td>
 							<td>{`${entry.amount} ${entry.coin?.symbol}`}</td>
-							<td>${(entry.amount * entry.coin.price).toFixed(2)}</td>
+							<td>${(entry.amount * Number(entry.coin.price)).toFixed(2)}</td>
 							<td>{formatNumber(entry.gain)}</td>
 							<td>{entry.status}</td>
 							<td>{entry.timestamp}</td>

@@ -31,27 +31,31 @@ function Assets() {
 					const findCoin = data?.data.coins.find(
 						item => item.name === coin.data?.name
 					)
+
 					const getProfit = () => {
-						if (findCoin?.price) {
+						if (findCoin?.price && coin.data?.price) {
 							return formatNumber(
-								(coin.data?.price - findCoin?.price) * coin.amount
+								(Number(coin.data.price) - Number(findCoin.price)) * coin.amount
 							)
 						}
+						return '0.00'
 					}
 					return (
-						<Card
-							key={index}
-							currency={coin.data?.name}
-							value={
-								findCoin?.price !== undefined
-									? (findCoin.price * coin.amount).toFixed(2)
-									: '0.00'
-							}
-							priceNow={findCoin?.price ?? 0}
-							priceBought={coin.data?.price ?? 0}
-							profit={getProfit() ?? ''}
-							data={coin}
-						/>
+						data && (
+							<Card
+								key={index}
+								currency={coin.data.name}
+								value={
+									findCoin?.price !== undefined
+										? (parseFloat(findCoin.price) * coin.amount).toFixed(2)
+										: '0.00'
+								}
+								priceNow={parseFloat(findCoin?.price ?? '0')}
+								priceBought={parseFloat(coin.data.price.toString() ?? '0')}
+								profit={getProfit()}
+								data={coin}
+							/>
+						)
 					)
 				})}
 				<Card style='new' />

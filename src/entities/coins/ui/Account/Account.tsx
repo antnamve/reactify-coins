@@ -1,14 +1,20 @@
 import { useAppSelector } from '@/app/appStore'
+import { ApiResponse } from '@/shared/interfaces'
 import './Account.css'
 
-function Account({ apiData }) {
+function Account({ apiData }: { apiData: ApiResponse }) {
 	const shortPositions = useAppSelector(state => state.coins.shortPositions)
 
+	console.log('chethis', apiData)
+
 	function calculateTotalValue() {
-		const prices = apiData.data.coins.reduce((acc, coin) => {
-			acc[coin.uuid] = parseFloat(coin.price)
-			return acc
-		}, {})
+		const prices = apiData.data.coins.reduce(
+			(acc: { [key: string]: number }, coin) => {
+				acc[coin.uuid] = parseFloat(coin.price)
+				return acc
+			},
+			{}
+		)
 
 		const totalValue = shortPositions.reduce((total, position) => {
 			const { amount, data } = position

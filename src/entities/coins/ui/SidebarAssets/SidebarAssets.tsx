@@ -1,7 +1,8 @@
+import { ApiResponse } from '@/shared/interfaces'
 import { useState } from 'react'
 import './SidebarAssets.css'
 
-function SidebarAssets({ apiData }) {
+function SidebarAssets({ apiData }: { apiData: ApiResponse }) {
 	const { coins } = apiData.data
 
 	const [visibleItems, setVisibleItems] = useState(5)

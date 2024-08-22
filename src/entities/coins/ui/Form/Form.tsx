@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useLazyGetCoinsQuery } from '../../api/coinsApi'
-import { buyCoin, sellCoin } from '../../model/coinsSlice'
+import { useGetCoinsQuery } from '../../api/coinsApi'
+import { shortSellCoin } from '../../model/coinsSlice'
 import './Form.css'
 
 function Form() {
 	const [amount, setAmount] = useState(0)
 	const [selectedCurrency, setSelectedCurrency] = useState<string | null>(null)
-	const { data, isLoading } = useLazyGetCoinsQuery('')
+	const { data, isLoading } = useGetCoinsQuery()
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		if (data && data.result.length > 0) {
-			setSelectedCurrency(data.result[0].id)
+		if (data && data.data.coins.length > 0) {
+			setSelectedCurrency(data.data.coins[0].name)
 		}
 	}, [data])
 
@@ -21,48 +21,27 @@ function Form() {
 	}
 
 	const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const selected = data?.result.find(
+		const selected = data?.data.coins.find(
 			currency => currency.name === e.target.value
 		)
-		setSelectedCurrency(selected?.id || null)
+
+		setSelectedCurrency(selected?.name || null)
 	}
 
-	const handleBuy = () => {
-		if (selectedCurrency && amount > 0) {
-			const selectedCoin = data?.result.find(
-				currency => currency.id === selectedCurrency
-			)
-			if (selectedCoin) {
-				dispatch(
-					buyCoin({
-						currency: selectedCurrency,
-						amount,
-						data: data?.result,
-					})
-				)
-			} else {
-				console.error('Selected coin not found')
-			}
-			setAmount(0)
-		}
-	}
+	const filteredData = data?.data.coins.find(
+		item => item.name === selectedCurrency
+	)
 
-	const handleSell = () => {
-		if (selectedCurrency && amount > 0) {
-			const selectedCoin = data?.result.find(
-				currency => currency.id === selectedCurrency
+	const handleShortSell = () => {
+		if (filteredData) {
+			dispatch(
+				shortSellCoin({
+					amount,
+					timestamp: new Date().toISOString(),
+					data: filteredData,
+				})
 			)
-			if (selectedCoin) {
-				dispatch(
-					sellCoin({
-						currency: selectedCurrency,
-						amount,
-						data: data?.result,
-					})
-				)
-			} else {
-				console.error('Selected coin not found')
-			}
+
 			setAmount(0)
 		}
 	}
@@ -75,18 +54,15 @@ function Form() {
 				{isLoading ? (
 					<option>Loading...</option>
 				) : (
-					data?.result.map(currency => (
-						<option key={currency.id} value={currency.name}>
+					data?.data.coins.map(currency => (
+						<option key={currency.name} value={currency.name}>
 							{currency.name}
 						</option>
 					))
 				)}
 			</select>
-			<button type='button' onClick={handleBuy}>
-				buy
-			</button>
-			<button type='button' onClick={handleSell}>
-				sell
+			<button type='button' onClick={handleShortSell}>
+				short sell
 			</button>
 		</form>
 	)

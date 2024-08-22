@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import ShortsForm from '../ShortsForm/ShortsForm'
+import ShortsForm from '../Form/Form'
 import './NewAssetCard.css'
 
 function NewAssetCard() {

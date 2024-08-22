@@ -21,7 +21,7 @@ interface CardProps {
 	currency?: string
 	value?: string
 	profit?: string
-	priceNow?: number
+	priceNow?: string | number
 	priceBought?: number
 	data?: ShortPosition
 }
