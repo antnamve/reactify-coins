@@ -1,4 +1,5 @@
 import { useAppSelector } from '@/app/appStore'
+import { ShortPosition } from '@/shared/interfaces'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
@@ -18,11 +19,11 @@ import './Card.css'
 interface CardProps {
 	style?: 'filled' | 'blank' | 'new'
 	currency?: string
-	value?: number
-	profit?: number
-	loss?: number
-	neutral?: number
-	data?: []
+	value?: string
+	profit?: string
+	priceNow?: number
+	priceBought?: number
+	data?: ShortPosition
 }
 
 function Card({
@@ -30,27 +31,22 @@ function Card({
 	currency,
 	value,
 	profit,
-	priceNow = 100,
+	priceNow,
 	priceBought,
 	data,
 }: CardProps) {
 	const [shouldBlink, setShouldBlink] = useState(false)
-	const [isValueIncreased, setIsValueIncreased] = useState(false)
-	const [previousValue, setPreviousValue] = useState<number | null>(null)
-	const { data: assets, refetch } = useGetCoinsQuery('')
+	const { data: assets } = useGetCoinsQuery()
 	const dispatch = useDispatch()
 	const oldData = useAppSelector(state => state.coins.shortPositions)
 
-	console.log('api', assets)
-	console.log('state', oldData)
-
 	const coin = assets?.data.coins.find(item => item.name === currency)
 
-	const { data: history } = useGetHistoryQuery(coin?.uuid)
+	const { data: history } = useGetHistoryQuery(coin?.uuid || '')
 
 	const dataPrepared = history?.data.history
 
-	function isOnTheHour(timestamp) {
+	function isOnTheHour(timestamp: number) {
 		const date = new Date(timestamp * 1000)
 		return date.getMinutes() === 0 && date.getSeconds() === 0
 	}
@@ -68,14 +64,8 @@ function Card({
 			setShouldBlink(false)
 		}, 1000)
 
-		if (previousValue !== null) {
-			setIsValueIncreased(value > previousValue)
-		}
-
-		setPreviousValue(value)
-
 		return () => clearTimeout(timeoutId)
-	}, [value, previousValue])
+	}, [value])
 
 	const formattedData = hourlyData?.map(entry => ({
 		price: parseFloat(entry.price),
@@ -89,11 +79,11 @@ function Card({
 		if (data) {
 			dispatch(
 				closeShortTrade({
-					timestamp: data.timestamp,
+					timestamp: data.timestamp ?? '',
 					coin: data,
 					oldData: oldData,
-					newData: assets.data,
-					currency,
+					newData: assets?.data,
+					currency: currency ?? '',
 				})
 			)
 		}
@@ -113,9 +103,7 @@ function Card({
 				<div
 					className={
 						style === 'filled'
-							? `card-filled ${shouldBlink ? 'blink' : ''} ${
-									isValueIncreased ? 'value-increased' : 'value-decreased'
-							  }`
+							? `card-filled ${shouldBlink ? 'blink' : ''}`
 							: 'card-blank'
 					}
 				>

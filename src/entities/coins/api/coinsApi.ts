@@ -1,4 +1,4 @@
-import { CoinsResponse } from '@/shared/interfaces'
+import { ApiResponse, GetHistoryResponse } from '@/shared/interfaces'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const coinsApi = createApi({
@@ -6,7 +6,7 @@ export const coinsApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: 'https://api.coinranking.com/v2/' }),
 	refetchOnReconnect: true,
 	endpoints: builder => ({
-		getCoins: builder.query<CoinsResponse, string>({
+		getCoins: builder.query<ApiResponse, void>({
 			query: () => {
 				return {
 					url: 'coins',
@@ -17,7 +17,7 @@ export const coinsApi = createApi({
 				}
 			},
 		}),
-		getHistory: builder.query<CoinsResponse, string>({
+		getHistory: builder.query<GetHistoryResponse, string>({
 			query: coinId => {
 				return {
 					url: `coin/${coinId}/history`,

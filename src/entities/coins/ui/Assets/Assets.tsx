@@ -1,4 +1,5 @@
 import { useAppSelector } from '@/app/appStore'
+import { formatNumber } from '@/shared/helpers/formatNumber'
 import '@/shared/titles.css'
 import { useEffect } from 'react'
 import { useGetCoinsQuery } from '../../api/coinsApi'
@@ -7,7 +8,7 @@ import './Assets.css'
 
 function Assets() {
 	const shortPositions = useAppSelector(state => state.coins.shortPositions)
-	const { data, refetch } = useGetCoinsQuery('')
+	const { data, refetch } = useGetCoinsQuery()
 
 	useEffect(() => {
 		const intervalId = setInterval(() => {
@@ -30,18 +31,25 @@ function Assets() {
 					const findCoin = data?.data.coins.find(
 						item => item.name === coin.data?.name
 					)
-
-					const getProfit = () =>
-						((coin.data?.price - findCoin?.price) * coin.amount).toFixed(2)
-
+					const getProfit = () => {
+						if (findCoin?.price) {
+							return formatNumber(
+								(coin.data?.price - findCoin?.price) * coin.amount
+							)
+						}
+					}
 					return (
 						<Card
 							key={index}
 							currency={coin.data?.name}
-							value={(findCoin?.price * coin.amount).toFixed(2)}
-							priceNow={findCoin?.price}
-							priceBought={coin.data?.price}
-							profit={getProfit()}
+							value={
+								findCoin?.price !== undefined
+									? (findCoin.price * coin.amount).toFixed(2)
+									: '0.00'
+							}
+							priceNow={findCoin?.price ?? 0}
+							priceBought={coin.data?.price ?? 0}
+							profit={getProfit() ?? ''}
 							data={coin}
 						/>
 					)

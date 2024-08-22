@@ -1,10 +1,14 @@
-import { useAppSelector } from '@/app/appStore'
+import { formatNumber } from '@/shared/helpers/formatNumber'
+import { Activities } from '@/shared/interfaces'
 import { useEffect } from 'react'
 import './Table.css'
 
-function Table() {
-	const activities = useAppSelector(state => state.coins.activities)
+interface TableProps {
+	entriesCount: number
+	activities: Activities[]
+}
 
+function Table({ entriesCount, activities }: TableProps) {
 	const reversed = [...activities].reverse()
 
 	useEffect(() => {}, [activities])
@@ -23,19 +27,19 @@ function Table() {
 					</tr>
 				</thead>
 				<tbody>
-					{reversed?.map((entry, index) => (
+					{reversed?.slice(0, entriesCount).map((entry, index) => (
 						<tr key={index}>
 							<td className='transaction-item'>
 								<img
-									src={entry.coin.iconUrl}
+									src={entry.coin?.iconUrl}
 									alt='Coin operation'
 									className='transaction-icon'
 								/>
-								{entry.coin.name}
+								{entry.coin?.name}
 							</td>
-							<td>{`${entry.amount} ${entry.coin.symbol}`}</td>
+							<td>{`${entry.amount} ${entry.coin?.symbol}`}</td>
 							<td>${(entry.amount * entry.coin.price).toFixed(2)}</td>
-							<td>{entry.gain}</td>
+							<td>{formatNumber(entry.gain)}</td>
 							<td>{entry.status}</td>
 							<td>{entry.timestamp}</td>
 						</tr>

@@ -10,9 +10,7 @@ const MainPage = () => {
 				<Assets />
 				<Activity />
 			</div>
-			<div className='aside'>
-				<Sidebar />
-			</div>
+			<Sidebar />
 		</main>
 	)
 }

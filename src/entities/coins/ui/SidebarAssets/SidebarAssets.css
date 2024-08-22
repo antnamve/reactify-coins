@@ -1,0 +1,31 @@
+.sidebar-assets {
+	min-width: 226px;
+}
+
+.sidebar-title {
+	color: #352e5b;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.sidebar-list-item {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 8px;
+}
+
+.sidebar-list-item-title {
+	color: #a69ed6;
+}
+
+.sidebar-list-item-value {
+	color: #352e5b;
+}
+
+.sidebar-coin-uuid {
+	color: #a69ed6;
+}
+
+.sidebar-more-assets-button {
+	color: #7d67ff;
+}
