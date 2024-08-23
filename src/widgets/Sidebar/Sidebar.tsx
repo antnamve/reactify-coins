@@ -1,7 +1,7 @@
-import { useGetCoinsQuery } from '@/entities/coins/api/coinsApi'
-import CoinsList from '@/entities/coins/ui/CoinsList/CoinsList'
-import Account from '@/entities/user/ui/Account/Account'
-import Profile from '@/entities/user/ui/TraderProfile/Profile'
+import { useGetCoinsQuery } from '@/entities/coin/api/coinsApi'
+import CoinsList from '@/entities/coin/ui/CoinsList/CoinsList'
+import Profile from '@/entities/user/ui/Profile/Profile'
+import Stats from '@/entities/user/ui/Stats/Stats'
 import './Sidebar.css'
 
 function Sidebar() {
@@ -9,13 +9,9 @@ function Sidebar() {
 
 	return (
 		<div className='sidebar'>
-			{data && (
-				<>
-					<Profile />
-					<Account apiData={data} />
-					<CoinsList apiData={data} />
-				</>
-			)}
+			<Profile />
+			<Stats />
+			{data && <CoinsList apiData={data} />}
 		</div>
 	)
 }

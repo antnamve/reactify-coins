@@ -1,0 +1,18 @@
+.tooltip {
+	background-color: #fff;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	font-size: 10px;
+	line-height: 1.2;
+}
+
+.tooltip .label {
+	margin: 0;
+	color: #666;
+}
+
+.tooltip .value {
+	margin: 0;
+	color: #000;
+}

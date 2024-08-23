@@ -1,5 +1,5 @@
-import { coinsApi } from '@/entities/coins/api/coinsApi'
-import coinsReducer from '@/entities/coins/model/coinsSlice'
+import { coinsApi } from '@/entities/coin/api/coinsApi'
+import coinsReducer from '@/entities/coin/model/coinsSlice'
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { useDispatch, useSelector } from 'react-redux'

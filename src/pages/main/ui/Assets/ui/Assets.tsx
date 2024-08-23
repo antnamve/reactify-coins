@@ -1,15 +1,13 @@
-import { useAppSelector } from '@/app/appStore'
-import { useGetCoinsQuery } from '@/entities/coins/api/coinsApi'
-import Card from '@/entities/shortPositions/ui/ShortPositionCard/ShortPositionCard'
-import OpenShortCard from '@/features/openShortPosition/ui/Card/Card'
-import { formatNumber } from '@/shared/helpers/formatNumber'
-import '@/shared/titles.css'
+import { useGetCoinsQuery } from '@/entities/coin/api/coinsApi'
+import OpenShortCard from '@/features/trading/ui/OpenShortCard/Card'
+import ShortCard from '@/features/trading/ui/ShortCard/ui/Card'
 import { useEffect } from 'react'
 import './Assets.css'
+import { getShortPositions } from '@/entities/activity/helpers/getShortPositions'
 
 function Assets() {
-	const shortPositions = useAppSelector(state => state.coins.shortPositions)
-	const { data, refetch } = useGetCoinsQuery()
+	const shortPositions = getShortPositions()
+	const { data: apiResponse, isLoading, refetch } = useGetCoinsQuery()
 
 	useEffect(() => {
 		const intervalId = setInterval(() => {
@@ -19,8 +17,6 @@ function Assets() {
 		return () => clearInterval(intervalId)
 	}, [refetch])
 
-	useEffect(() => {}, [shortPositions])
-
 	return (
 		<section className='assets'>
 			<div className='title'>
@@ -28,38 +24,22 @@ function Assets() {
 				<span className='title-end'>More Assets</span>
 			</div>
 			<div className='cards-row'>
-				{shortPositions?.map((coin, index) => {
-					const findCoin = data?.data.coins.find(
-						item => item.name === coin.data?.name
-					)
-
-					const getProfit = () => {
-						if (findCoin?.price && coin.data?.price) {
-							return formatNumber(
-								(Number(coin.data.price) - Number(findCoin.price)) * coin.amount
-							)
-						}
-						return '0.00'
-					}
-					return (
-						data && (
-							<Card
-								key={index}
-								currency={coin.data.name}
-								value={
-									findCoin?.price !== undefined
-										? (parseFloat(findCoin.price) * coin.amount).toFixed(2)
-										: '0.00'
-								}
-								priceNow={parseFloat(findCoin?.price ?? '0')}
-								priceBought={parseFloat(coin.data.price.toString() ?? '0')}
-								profit={getProfit()}
-								shortPosition={coin}
-							/>
-						)
-					)
-				})}
-				<OpenShortCard />
+				{isLoading ? (
+					<div>Loading...</div>
+				) : (
+					<>
+						{apiResponse &&
+							shortPositions.map((item, index) => (
+								<ShortCard
+									apiResponse={apiResponse}
+									key={index}
+									shortPosition={item}
+									index={index}
+								/>
+							))}
+						<OpenShortCard />
+					</>
+				)}
 			</div>
 		</section>
 	)

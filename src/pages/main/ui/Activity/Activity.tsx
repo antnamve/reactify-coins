@@ -1,11 +1,11 @@
-import { useAppSelector } from '@/app/appStore'
+import { getActivities } from '@/entities/activity/helpers/getActivities'
+import Table from '@/features/trading/ui/Table/Table'
 import { useState } from 'react'
-import Table from '../../../../entities/activities/ui/ActivitiesTable/ActivitiesTable'
 import './Activity.css'
 
 function Activity() {
+	const activities = getActivities()
 	const [entriesCount, setEntriesCount] = useState(5)
-	const activities = useAppSelector(state => state.coins.activities)
 
 	const loadMore = () => {
 		setEntriesCount(prevCount => prevCount + 5)
